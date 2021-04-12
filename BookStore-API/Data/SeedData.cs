@@ -21,7 +21,7 @@ namespace BookStore_API.Data
             {
                 var user = new IdentityUser
                 {
-                    UserName = "admin",
+                    UserName = "admin@bookstore.com",
                     Email = "admin@bookstore.com"
                 };
                 var result = await userManager.CreateAsync(user, "1P@ssword!");
