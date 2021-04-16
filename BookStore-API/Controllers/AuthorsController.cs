@@ -62,11 +62,9 @@ namespace BookStore_API.Controllers
         /// <param name="id"></param>
         /// <returns>Returns an Author record.</returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Customer, Administrator")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
         public async Task<IActionResult> GetAuthor(int id)
         {
             var location = GetControllerActionNames();
@@ -95,7 +93,7 @@ namespace BookStore_API.Controllers
         }
 
         /// <summary>
-        /// Create an author.
+        /// Creates an author.
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>

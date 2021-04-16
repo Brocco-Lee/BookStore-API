@@ -24,7 +24,7 @@
         </member>
         <member name="M:BookStore_API.Controllers.AuthorsController.Create(BookStore_API.DTOs.AuthorCreateDTO)">
             <summary>
-            Create an author.
+            Creates an author.
             </summary>
             <param name="author"></param>
             <returns></returns>

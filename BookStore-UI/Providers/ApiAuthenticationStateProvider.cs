@@ -29,7 +29,7 @@ namespace BookStore_UI.Providers
                     return new AuthenticationState(new System.Security.Claims.ClaimsPrincipal(new ClaimsIdentity()));
                 }
                 var tokenContent = _tokenHandler.ReadJwtToken(savedToken);
-                var expiry = tokenContent.ValidTo;
+                var expiry = tokenContent.ValidTo.AddHours(5);
                 if(expiry < DateTime.Now)
                 {
                     await _localStorage.RemoveItemAsync("authToken");
