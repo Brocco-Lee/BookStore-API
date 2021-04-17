@@ -1,10 +1,16 @@
-﻿@page "/authors/view/{id}"
-
+﻿@page "/authors/delete/{Id}"
+@attribute [Authorize(Roles = "Administrator")]
 @inject IAuthorRepository _repo
 @inject NavigationManager _navManager
 
-<h3>View Author Details</h3>
-
+<h3 class="card-title">Are you sure you want to Delete this record?</h3>
+<br />
+<hr />
+<br />
+@if (isFailed)
+{
+    <ErrorMessage Message="Something went wrong with the operation." />
+}
 @if (Model == null)
 {
     <LoadingMessage Message="Laoding Author details." />
@@ -54,23 +60,39 @@ else
 }
 <br />
 
+<button @onclick="DeleteAuthor" class="btn btn-danger">
+    <span class="oi oi-delete"></span>
+    Delete Author
+</button>
+
 <button @onclick="BackToList" class="btn btn-outline-secondary">
     <span class="oi oi-media-skip-backward"></span>
     Back to List
 </button>
 
-
-
-
 @code {
     [Parameter]
     public string Id { get; set; }
     private Author Model = new Author();
+    private bool isFailed = false;
 
     protected override async Task OnInitializedAsync()
     {
         int id = Convert.ToInt32(Id);
         Model = await _repo.Get(Endpoints.AuthorsEndpoint, id);
+    }
+
+    private async Task DeleteAuthor()
+    {
+        bool isSuccess = await _repo.Delete(Endpoints.AuthorsEndpoint, Model.Id);
+        if (isSuccess)
+        {
+            BackToList();
+        }
+        else
+        {
+            isFailed = true;
+        }
     }
 
     private void BackToList()
