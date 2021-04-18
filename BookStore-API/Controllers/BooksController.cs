@@ -62,7 +62,7 @@ namespace BookStore_API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>A Book record.</returns>
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -78,7 +78,7 @@ namespace BookStore_API.Controllers
                     _logger.LogWarn($"{location}: Failed to retrieve record with id: {id}");
                     return NotFound();
                 }
-                var response = _mapper.Map<IList<BookDTO>>(book);
+                var response = _mapper.Map<BookDTO>(book);
                 _logger.LogInfo($"{location}: Successful got record with id: {id}");
                 return Ok(response);
             }
@@ -94,7 +94,7 @@ namespace BookStore_API.Controllers
         /// <param name="bookDTO"></param>
         /// <returns>Book object</returns>
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] BookCreateDTO bookDTO)
